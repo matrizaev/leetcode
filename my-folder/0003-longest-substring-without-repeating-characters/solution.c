@@ -1,19 +1,18 @@
 int lengthOfLongestSubstring(char * s){
-	char *start = s;
-	int result = 0;
-    while (*s != 0){
-		
-		char ch = *s;
-		for (char *temp = start; temp != s; temp++){
-			if (*temp == ch){
-				start = temp + 1;
-				break;
-			}
-		}
-		s++;
-		int running = s - start;
-		if (running > result)
-			result = running;
+    int hash_map[256] = {0};
+    int left = 0, right = 0;
+    int res = 0;
+    while (s != NULL && s[right] != '\0'){
+        char r = s[right];
+        if (hash_map[r] > 0){
+            if (hash_map[r] >= left)
+                left = hash_map[r];
+        }
+        int new_len = right - left + 1;
+        if (new_len > res)
+            res = new_len;
+        right++;
+        hash_map[r] = right;
     }
-    return result;
+    return res;
 }
