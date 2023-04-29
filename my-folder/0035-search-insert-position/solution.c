@@ -1,18 +1,14 @@
-int searchInsert(int* nums, int numsSize, int target){
-    long start = 0, end = numsSize-1; 
-    if (nums[start] >= target)
-        return start;
-    if (nums[end] <= target)
-        return nums[end] == target ? end : end + 1;
-    char dir = nums[start] < nums[end] ? 1 : -1;
-    while ((end-start) > 1){
-        long int middle = (start + end) / 2;
+size_t searchInsert(int* nums, size_t numsSize, int target){
+    ssize_t start = 0, end = numsSize - 1;
+    while (start <= end){
+        ssize_t middle = (start + end) / 2;
         if (nums[middle] == target)
-                return middle;
-        if (dir*(target - nums[middle]) > 0)
-            start = middle;
+            return middle;
+        if (nums[middle] < target)
+            start = middle + 1;
         else
-            end = middle;
+            end = middle - 1;
     }
-    return end;
+    return start;
 }
+
