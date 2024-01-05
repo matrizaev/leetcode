@@ -20,13 +20,7 @@ int guessNumber(int n){
                 break;
             default:
                 start = middle + 1;
-        }
-        // if (trial < 0)
-        //     end = middle - 1;
-        // else if (trial > 0)
-        //     start = middle + 1;
-        // else
-        //     return middle;         
+        }      
     }
     return start;	
 }
