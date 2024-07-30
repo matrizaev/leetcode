@@ -19,14 +19,13 @@ impl Solution {
             (1, "I"),
         ];
 
-        let mut result = String::new();
-        for &(value, symbol) in &roman_numbers {
-            while num >= value {
-                num -= value;
-                result.push_str(symbol);
-            }
-        }
-
-        result
+        roman_numbers.iter()
+        .flat_map(|&(value, symbol)| {
+            // Calculate how many times the symbol should be repeated
+            let count = num / value;
+            num %= value;
+            std::iter::repeat(symbol).take(count as usize)
+        })
+        .collect()
     }
 }
