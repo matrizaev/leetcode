@@ -1,24 +1,33 @@
 struct NumArray {
-    nums: Vec<i32>
+    prefix_sum: Vec<i32>,
 }
 
-
-/** 
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
 impl NumArray {
-
     fn new(nums: Vec<i32>) -> Self {
         NumArray {
-            nums
+            prefix_sum: nums
+                .iter()
+                .scan(0, |state, &x| {
+                    *state += x;
+                    Some(*state)
+                })
+                .collect(),
         }
     }
-    
+
     fn sum_range(&self, left: i32, right: i32) -> i32 {
-        let left: usize = left as usize;
-        let right: usize = right as usize;
-        self.nums[left..=right].iter().sum()
+        let left = if (left as usize) > 0 {
+            self.prefix_sum[(left - 1) as usize]
+        } else {
+            0
+        };
+        let right = if (right as usize) < self.prefix_sum.len() {
+            self.prefix_sum[right as usize]
+        } else {
+            0
+        };
+
+        right - left
     }
 }
 
